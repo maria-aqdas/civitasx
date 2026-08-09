@@ -1,0 +1,8 @@
+streamlit
+google-genai
+plotly
+pandas
+pypdf
+python-dotenv
+pytesseract
+pdf2image
