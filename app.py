@@ -471,6 +471,9 @@ if submit_button:
                 </div>"""
                 st.markdown(title_html, unsafe_allow_html=True)
 
+                if data.get("_was_truncated"):
+                    st.warning("⚠️ Ye document bohot lamba tha, is liye sirf shuru ka hissa analyze kiya gaya hai.")
+
                 summary_html = f"""<div dir="{text_dir}" style="text-align:{text_align};
                     background: #ffffff;
                     border: 1px solid #eef0f5;
@@ -590,7 +593,16 @@ if submit_button:
                 )
 
             except Exception as e:
-                st.error(f"Error executing analysis: {str(e)}")
+                err_text = str(e)
+                if "RESOURCE_EXHAUSTED" in err_text or "429" in err_text:
+                    st.error(
+                        "⚠️ Filhal bohot zyada log ye app use kar rahe hain, ya document "
+                        "bohot bada hai. Meherbani kar ke 1 minute wait kar ke dobara try karein."
+                    )
+                elif "API_KEY" in err_text or "PERMISSION_DENIED" in err_text or "401" in err_text:
+                    st.error("⚠️ App ki API key mein masla hai. App owner se rabta karein.")
+                else:
+                    st.error("⚠️ Kuch masla ho gaya hai analysis run karte waqt. Dobara try karein, ya chota document use karein.")
 
 else:
     st.info("👈 Upload a PDF or paste your policy text in the sidebar, then click **'Submit & Run Simulation'**. Or hit **'Try Sample'** for a quick demo!")
