@@ -29,8 +29,24 @@ def _get_depth_instructions(word_count):
 
 
 def analyze_policy(policy_text, language="English"):
+    # Cap document length so we stay safely under the Gemini free-tier
+    # per-minute input token limit. Roughly 1 word ≈ 1.3 tokens, so
+    # ~12,000 words keeps a single request comfortably under 250k tokens
+    # even with the rest of the prompt included.
+    MAX_WORDS = 12000
+    words = policy_text.split()
+    was_truncated = len(words) > MAX_WORDS
+    if was_truncated:
+        policy_text = " ".join(words[:MAX_WORDS])
+
     word_count = len(policy_text.split())
     depth = _get_depth_instructions(word_count)
+
+    truncation_note = (
+        f"\n\nNOTE: This document was very long, so only the first "
+        f"{MAX_WORDS} words are shown above. Base your analysis on this portion."
+        if was_truncated else ""
+    )
 
     prompt = f"""
     You are a helpful Public Policy Analyst who explains things in very simple, everyday language.
@@ -38,7 +54,7 @@ def analyze_policy(policy_text, language="English"):
     Analyze the following public policy proposal for its societal, economic, and environmental impacts.
 
     Policy Proposal (approximately {word_count} words):
-    {policy_text}
+    {policy_text}{truncation_note}
 
     IMPORTANT WRITING RULES (follow these strictly):
     - Write your ENTIRE response (title, summary, benefits, risks, environmental_impact) in {language}.
@@ -80,4 +96,6 @@ def analyze_policy(policy_text, language="English"):
         }
     )
 
-    return json.loads(response.text)
+    result = json.loads(response.text)
+    result["_was_truncated"] = was_truncated
+    return result
