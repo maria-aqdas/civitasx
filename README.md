@@ -1,4 +1,4 @@
-# 🏛️ CivitasX  AI Policy Impact Simulator
+# 🏛️ CivitasX    AI Policy Impact Simulator
 
 **Turn any policy draft into clear, easy-to-read insights on its economic, social, and environmental impact.**
 
