@@ -11,7 +11,7 @@ Built for the **Build Beyond Hackathon**.
 ## ✨ Features
 
 - **📄 Flexible Input** : Paste policy text directly, or upload a PDF document.
-- **🔍 Smart PDF Reading** — Automatically extracts text from PDFs, with built-in OCR fallback for scanned/image-based documents.
+- **🔍 Smart PDF Reading** : Automatically extracts text from PDFs, with built-in OCR fallback for scanned/image-based documents.
 - **🤖 AI-Powered Analysis** — Uses Google Gemini to analyze the policy and generate:
   - A plain-language summary (length scales with document detail)
   - Key **Benefits**
