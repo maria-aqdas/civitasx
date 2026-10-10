@@ -4,7 +4,7 @@
 
 CivitasX is an AI-powered tool that helps citizens, students, and policymakers understand what a public policy actually *means* — in plain, simple language, before it's passed. Paste a policy proposal or upload a PDF, and CivitasX breaks it down into benefits, risks, environmental effects, and easy-to-read impact scores.
 
-Built for the **Build Beyond Hackathon**.
+Built for the **Build Beyond Hackathon**.           
  
 ---
 
